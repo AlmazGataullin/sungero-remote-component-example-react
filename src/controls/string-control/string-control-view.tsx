@@ -1,6 +1,5 @@
 import React from 'react';
-import { Theme } from '@directum/sungero-remote-component-types';
-
+import { IRemoteComponentCardApi, IRemoteComponentMetadata, Theme } from '@directum/sungero-remote-component-types';
 import './string-control-view.css';
 
 interface IProps {
@@ -11,37 +10,44 @@ interface IProps {
   isEnabled: boolean;
 }
 
-const DEFAULT_THEME_ICON = '☀';
-const NIGHT_THEME_ICON = '☾';
+interface ITaskGuids {
+  name: string;
+  typeGuid: string;
+}
 
 const StringControlView: React.FC<IProps> = ({ label, value, onChange, theme, isEnabled }) => {
-  const [ editorValue, setEditorValue ] = React.useState(value ?? '');
+  const [editorValue, setEditorValue] = React.useState(value ?? '');
+  const options: ITaskGuids[] = [
+    { name: "Согласование процессов", typeGuid: "GUID1" },
+    { name: "Свободное согласование", typeGuid: "GUID2" },
+    { name: "Новый тип задачи", typeGuid: "GUID3" }
+  ];
 
-  React.useEffect(() => setEditorValue(value ?? ''), [ value ]);
+  React.useEffect(() => setEditorValue(value ?? ''), [value]);
 
-  const handleBlur = React.useCallback(() => {
-    if (editorValue !== value)
-      onChange(editorValue);
-  }, [ onChange, value, editorValue ]);
-  
-  const icon = theme === Theme.Default ? DEFAULT_THEME_ICON : NIGHT_THEME_ICON;
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEditorValue(e.target.value);
+    onChange(e.target.value);
+  };
 
   const labelClassName = `string-control__label${!isEnabled ? ' string-control__label_disabled' : ''}`;
-  const inputClassName = `string-control__input${!isEnabled ? ' string-control__input_disabled' : ''}`;
+  const selectClassName = `string-control__select${!isEnabled ? ' string-control__select_disabled' : ''}`;
 
   return (
-    <div className='string-control'>
-      <span className={labelClassName}>{icon} {label}</span>
-      <input
-        className={inputClassName}
-        type='text'
+    <div className="string-control">
+      <span className={labelClassName}> {label} </span>
+      <select
+        className={selectClassName}
         value={editorValue}
-        onBlur={handleBlur}
-        onChange={e => setEditorValue(e.target.value)}
+        onChange={handleChange}
         disabled={!isEnabled}
-      />
+      >
+        {options.map(option => (
+          <option key={option.typeGuid} value={option.typeGuid}>{option.name}</option>
+        ))}
+      </select>
     </div>
   );
 };
-  
+
 export default StringControlView;

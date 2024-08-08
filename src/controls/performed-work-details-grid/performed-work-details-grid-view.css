@@ -8,9 +8,6 @@
   overflow-y: auto;
 }
 
-.preformed-work-details-grid__top-buttons {
-}
-
 .preformed-work-details-grid__add-new-button {
   flex-grow: 1;
   background: var(--theme_primary);

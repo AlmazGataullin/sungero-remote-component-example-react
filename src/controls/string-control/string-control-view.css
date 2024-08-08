@@ -1,37 +1,43 @@
 .string-control {
-  height: 55px;
-  display: flex;
-  flex-direction: column;
-  margin-left: 3px;
+  margin-bottom: 10px;
+  display: flex; /* Используем flexbox для расположения элементов в строку */
+  align-items: center; /* Выравниваем элементы по вертикали */
 }
 
 .string-control__label {
-  margin-bottom: 10px;
-  /** Для соответствия общему UI веб клиента и текущей теме (светлая, темная) лучше использовать css-переменные темы веб клиента. */
-  color: var(--theme_label-enabled-color);
+  display: block;
+  font-weight: bold;
+  margin-right: 10px; /* Отступ между меткой и контролом */
+  color: blue; /* Синий цвет для метки */
 }
 
 .string-control__label_disabled {
-  color: var(--theme_label-disabled-color);
+  color: #666; /* Цвет текста для отключенного состояния */
 }
 
-.string-control__input {
-  border-radius: 3px;
-  border: 1px solid var(--theme_border-color-dark);
-  height: 30px;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: transparent;
+.string-control__select {
+  flex: 1; /* Занимаем все доступное пространство */
+  border: none; /* Удаление рамки у выпадающего списка */
+  border-bottom: 1px solid #ccc; /* Добавление нижней границы */
   padding: 5px;
-  color: var(--theme_text-primary);
 }
 
-.string-control__input:focus {
-  border-color: var(--theme_focused-editor-border-color);
-  border-width: 2px; 
-  outline: none;
+.string-control__select_disabled {
+  background-color: #f4f4f4; /* Фон для отключенного состояния */
+  color: #999; /* Цвет текста для отключенного состояния */
+  cursor: not-allowed;
 }
 
-.string-control__label_disabled:focus {
-  border-color: var(--theme_border-color-dark);
+/* Стили для темной темы */
+.theme-dark .string-control__select {
+  background-color: #333;
+  color: #fff;
+  border-bottom-color: #999; /* Цвет нижней границы для темной темы */
+}
+
+/* Стили для светлой темы */
+.theme-light .string-control__select {
+  background-color: #f9f9f9;
+  color: #333;
+  border-bottom-color: #ccc; /* Цвет нижней границы для светлой темы */
 }
